@@ -10,7 +10,9 @@
   },
   "permissions": [
           "storage",
-          "clipboardWrite"
+          "clipboardWrite", 
+          "http://*/*", 
+          "https://*/*"
         ],
   "browser_action": {
     "default_popup": "browser_action.html",
