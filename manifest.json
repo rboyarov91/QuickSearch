@@ -1,0 +1,27 @@
+{
+  "name": "QuickCommandSearch",
+  "description": "Press Ctrl+Shift+F (Command+Shift+F on a Mac) to open the search box",
+  "version": "1.0",
+  "manifest_version": 2,
+  "options_page": "options.html",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+          "storage",
+          "clipboardWrite"
+        ],
+  "browser_action": {
+    "default_popup": "browser_action.html",
+    "default_icon": "search.png"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      }
+    }
+  }
+}
