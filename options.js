@@ -5,6 +5,8 @@ function save_options() {
   chrome.storage.sync.get({savedCommands:[]},
     function(result){
       var currCommand = document.getElementById('command').value;
+      addCommandToTable(currCommand);
+      var command = {command:currCommand,comment:"test Comment"};
       var savedCommands = result.savedCommands;
       savedCommands.push(currCommand);
       chrome.storage.sync.set({savedCommands:savedCommands},function(){
@@ -12,6 +14,7 @@ function save_options() {
           console.log(result.savedCommands);
           var readableCommands = document.getElementById('readableCommands');
           readableCommands.textContent=result.savedCommands;
+
         })
         document.getElementById('command').value = '';
         var status = document.getElementById('status');
@@ -23,19 +26,6 @@ function save_options() {
     }, 750);
       })
     });
-
-//document.getElementById('command').value = '';
-
- // chrome.storage.sync.set({
- //   savedCommand: allCommands
- // }, function() {
- //   // Update status to let user know options were saved.
- //   var status = document.getElementById('status');
- //   status.textContent = 'Options saved.';
- //   setTimeout(function() {
- //     status.textContent = '';
- //   }, 750);
- // });
 
     
 }
@@ -57,6 +47,32 @@ function restore_options() {
 function clear_options(){
   chrome.storage.sync.clear();
   restore_options();
+}
+
+function addCommandToTable(command){
+  var table = document.getElementById("commandTable");
+
+  var rows;
+  
+    if(typeof table.rows.length == 'undefined'){
+    rows = 0;}else{
+      rows = document.getElementById("commandTable").rows.length;
+    }
+    console.log(rows);
+try{
+  var y = document.createElement("TR");
+    y.setAttribute("id", "myTr"+rows);
+    document.getElementById("commandTable").appendChild(y);
+
+    var z = document.createElement("TD");
+    z.setAttribute("padding","5px");
+    var t = document.createTextNode(command);
+    z.appendChild(t);
+    document.getElementById("myTr"+rows).appendChild(z);}
+    catch(err){
+      console.log(err);
+    }
+
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click',
