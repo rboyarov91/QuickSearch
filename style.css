@@ -35,6 +35,13 @@ body {
   min-height: 42px;
 }
 
+.saveText {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+
 .firstRow > td{
   word-wrap: break-word;
   border-bottom: 1px solid black;

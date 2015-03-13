@@ -1,11 +1,14 @@
 var main = function() {
-  $('.btn').click(function() {
+  $('.save').click(function() {
+
 
     var comment = $('.comment').val(); //value in command box
     var command = $('.command').val(); //value in comment box
-    populateTable({command:command,comment:comment});
+    var itemToSave = {command:command,comment:comment};
+    populateTable(itemToSave);
+    save({command:command,comment:comment});
     $('.status-box').val('');
-    $('.btn').addClass('disabled'); 
+    $('.save').addClass('disabled'); 
 
   });
   
@@ -13,27 +16,55 @@ var main = function() {
     var commentLength = $('.comment').val().length;
     var commandLength = $('.command').val().length;
     if((commentLength > 0) && (commandLength > 0)) {
-      $('.btn').removeClass('disabled'); 
+      $('.save').removeClass('disabled'); 
     }
     else {
-      $('.btn').addClass('disabled');
+      $('.save').addClass('disabled');
     }
   });
   
-  $('.btn').addClass('disabled');
+  $('.save').addClass('disabled');
+
+  $('.clear').click(function(){
+
+  chrome.storage.sync.clear();
+  $('.posts').empty();
+  })
 }
 
 
 $(document).ready(main);
 
-var restore  = function(array){
-  for(i = 0;i<array.length;i++){
-    populateTable(array[i]);
+var restore  = function(){
+    chrome.storage.sync.get({savedCommands:[]},function(result){
+     if (typeof result !== 'undefined') {
+       var allResults = result.savedCommands;
+      for(i = 0;i<allResults.length;i++){
+      populateTable(allResults[i]);
+    }
   }
-}
+  });
+
+  }
 
 var save = function(item){
   //add to the array of stored items in chrome
+  chrome.storage.sync.get({savedCommands:[]},function(result){
+    var currCommand = item.command;
+    var currComment = item.comment;
+    var savedCommands = result.savedCommands;
+    var commandToSave={command:currCommand,comment:currComment};
+    savedCommands.push(commandToSave);
+    chrome.storage.sync.set({savedCommands:savedCommands},function(){
+      var status = document.getElementById('status');
+        status.textContent = 'Options saved.';
+        setTimeout(function() {
+        status.textContent = '';
+    }, 750);
+
+    });
+
+  });
 }
 
 
@@ -58,3 +89,5 @@ var populateTable = function(item){
     listItem.append(table);
     listItem.prependTo('.posts');
 }
+
+document.addEventListener('DOMContentLoaded', restore);
