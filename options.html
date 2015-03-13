@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<!--html>
 <head><title>My Test Extension Options</title>
 <link rel="stylesheet" href="optionsTable.css"></head>
 <body>
@@ -15,19 +15,6 @@ Enter comment for command:
 <textarea cols="40" rows="5" id="comment">
 </textarea>
 <br><br>
-<!--Favorite color:
-<select id="color">
- <option value="red">red</option>
- <option value="green">green</option>
- <option value="blue">blue</option>
- <option value="yellow">yellow</option>
-</select>
-
-<label>
-  <input type="checkbox" id="like">
-  I like colors.
-</label>
--->
 <div id="status"></div>
 
 <button id="save">Save</button>
@@ -49,4 +36,34 @@ Saved commands:
 </html>
 
 
-<script src="options.js"></script>
+<script src="options.js"></script-->
+	<html>
+  <head>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href='cssfamilyRoboto' rel='stylesheet' type='text/css'>
+    <link href="style.css" rel="stylesheet">
+    
+    <script src="jquery-1.10.2.js"></script>
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <div class="container center">
+      <form>
+        <div class="form-group">
+          <textarea class="form-control status-box command" rows="2" placeholder="Command"></textarea>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control status-box comment" rows="2" placeholder="Comment"></textarea>
+        </div>
+      </form>
+      <div class="button-group pull-right">
+        <a href="#" class="btn btn-primary">Save</a>
+      </div>
+    
+      <ul class="posts">
+      </ul>
+    </div>
+
+    
+  </body>
+</html>

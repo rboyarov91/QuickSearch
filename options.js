@@ -40,6 +40,7 @@ function restore_options() {
   }, function(items) {
     var readableCommands = document.getElementById('readableCommands');
     readableCommands.textContent=items.savedCommands;
+    restoreTable(items.savedCommands);
 
   });
 }
@@ -48,6 +49,14 @@ function clear_options(){
   chrome.storage.sync.clear();
   restore_options();
 }
+
+function restoreTable(allCommands){
+  console.log("length of commands to restore: " + allCommands.length + " " + allCommands[allCommands.length]);
+  for(i = 1; i<allCommands.length ; i++){
+    addCommandToTable(allCommands[i]);
+  }
+}
+
 
 function addCommandToTable(command){
   var table = document.getElementById("commandTable");
@@ -65,7 +74,6 @@ try{
     document.getElementById("commandTable").appendChild(y);
 
     var z = document.createElement("TD");
-    z.setAttribute("padding","5px");
     var t = document.createTextNode(command);
     z.appendChild(t);
     document.getElementById("myTr"+rows).appendChild(z);}
