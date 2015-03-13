@@ -20,7 +20,8 @@ body {
   clear: both;
   list-style: none;
   padding-left: 0;
-  width: 100%;
+  /*width: 100%;*/
+  width : 546px;
 }
 
 .posts li {
