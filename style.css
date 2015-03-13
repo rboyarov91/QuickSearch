@@ -1,8 +1,7 @@
 html,
 body {
-  /*font-family: 'Roboto', sans-serif;*/
+  font-family: 'Roboto', sans-serif;
   color: #404040;
-  /*background-color: #eee;*/
  ;
 }
 
@@ -40,11 +39,13 @@ body {
   word-wrap: break-word;
   border-bottom: 1px solid black;
   padding-bottom: 10px;
+  word-break: break-all;
 
 }
 
 .secondRow > td{
   padding-top: 10px;
+  word-break: break-all;
 }
 
 table{
