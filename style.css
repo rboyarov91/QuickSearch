@@ -1,8 +1,9 @@
 html,
 body {
-  font-family: 'Roboto', sans-serif;
+  /*font-family: 'Roboto', sans-serif;*/
   color: #404040;
-  background-color: #eee;
+  /*background-color: #eee;*/
+ ;
 }
 
 .container {
@@ -14,12 +15,6 @@ body {
   margin-bottom: 20px;
 }
 
-.counter {
-  display: inline;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-right: 10px;
-}
 
 .posts {
   clear: both;
@@ -40,16 +35,19 @@ body {
   min-height: 42px;
 }
 
-.myRow{
+.firstRow > td{
   word-wrap: break-word;
   border-bottom: 1px solid black;
+  padding-bottom: 10px;
 
 }
 
-.myTable tr{
-  
-  word-wrap: break-word;
-  border-bottom: 1px solid black;
+.secondRow > td{
+  padding-top: 10px;
+}
+
+table{
+  width: 100%
 }
 
 .center {
