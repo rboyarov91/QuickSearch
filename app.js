@@ -47,14 +47,59 @@ var populateTable = function(item){
     //create first row and add to table
     var firstRow = $('<tr></tr>')
     firstRow.addClass('firstRow');
-    firstRow.append('<td><b>' + command + '</b></td>');
+    firstRow.append('<td class="bold">' + command + '</td>');
     table.append(firstRow);
     //create second row and add to table
     var secondRow = $('<tr></tr>')
     secondRow.addClass('secondRow');
     secondRow.append('<td>' + comment + '</td>');
+
     table.append(secondRow);
     //add table to list item and then to list
     listItem.append(table);
     listItem.prependTo('.posts');
+    var hoverText = $('<span class="span"><a class="editlink" href="#">Edit</a> <a class="deletelink" ' +
+        'href="#">Delete</a></span>');
+      //$('.myTable').append(hoverText);
+      //$('.span').toggle();
+
+    $('.myTable').hover(function(){
+      if($(this).children().length==1){
+      $(this).append(hoverText);}
+      $('.editlink').click(edit_text);
+      console.log($(this).children().length);
+
+      
+    },function(){
+      hoverText.remove();
+         //$('.span').toggle();
+    });
+
+
+
+  $('.editlink').click(edit_text);
+  $('.deletelink').click(delete_text);
+
+
+}
+
+var edit_text = function(){
+  var currTable = $(this).parent().parent()[0];
+  var info = currTable.getElementsByTagName('td');
+  var currCommand = info[0].innerHTML;
+  var CurrComment = info[1].innerHTML;
+  $('.command').val(currCommand);
+  $('.comment').val(CurrComment);
+  //delete current one as well
+
+}
+
+var delete_text = function(){
+
+  var currTable = $(this).parent().parent()[0];
+  var info = currTable.getElementsByTagName('td');
+  var currCommand = info[0].innerHTML;
+  var CurrComment = info[1].innerHTML;
+  // grab it from storage and delete
+
 }
