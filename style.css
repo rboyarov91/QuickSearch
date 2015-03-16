@@ -2,7 +2,7 @@ html,
 body {
   font-family: helvetica;
   color: #404040;
- ;
+ background-attachment: fixed;
 }
 
 .container {

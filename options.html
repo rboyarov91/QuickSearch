@@ -1,46 +1,9 @@
 <!DOCTYPE html>
-<!--html>
-<head><title>My Test Extension Options</title>
-<link rel="stylesheet" href="optionsTable.css"></head>
-<body>
-
-
-Enter command:
-<br><br>
-<textarea cols="40" rows="5" id="command">
-</textarea>
-<br><br>
-Enter comment for command:
-<br><br>
-<textarea cols="40" rows="5" id="comment">
-</textarea>
-<br><br>
-<div id="status"></div>
-
-<button id="save">Save</button>
-<button id="clear">Clear All</button>
-
-<br>
-<br>
-Saved commands:
-<br>
-<div id="readableCommands"></div>
-<br>
-<br>
-
-
-<TABLE id="commandTable" style="width:50%" ></TABLE>
-
-
-</body>
-</html>
-
-
-<script src="options.js"></script-->
 	<html>
   <head>
     <link href="bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <link href="dropdown.css" rel="stylesheet">
 
     <script src="jquery-1.10.2.js"></script>
     <script src="app.js"></script>
@@ -58,8 +21,18 @@ Saved commands:
       <div class="button-group pull-right">
         <a href="#" class="btn btn-primary save">Save</a>
         <a href="#" class="btn btn-primary clear">Clear All</a>
-        <div class="saveText" id="status"></div>
+        
+        <span>Search through: </span>
+        <div class="dropdown">
+    <select name="one" class="dropdown-select">
+      <option value="command">Commands</option>
+      <option value="comment">Comments</option>
+      <option value="both">Both</option>
+   	 </select>
+  		</div>
+  		<div class="saveText" id="status"></div>
       </div>
+      
     
       <ul class="posts">
       </ul>

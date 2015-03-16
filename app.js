@@ -30,6 +30,7 @@ var main = function() {
   chrome.storage.sync.clear();
   $('.posts').empty();
   })
+  $('.dropdown-select').change(searchChange);
 
 
   // $('.deletelink').click(delete_text);
@@ -174,4 +175,17 @@ var getIndex = function(array, attr, value) {
         }
     }
     return -1;
+}
+
+var searchChange = function(){
+
+  var current = $(this).val();
+  console.log(current);
+  chrome.storage.sync.set({searchFrom:current},function(){
+    chrome.storage.sync.get({searchFrom:[]},function(item){
+      console.log('search changed to: ' + item.searchFrom);
+    });
+
+    });
+
 }
