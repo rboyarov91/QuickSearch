@@ -30,12 +30,17 @@ var main = function() {
   chrome.storage.sync.clear();
   $('.posts').empty();
   })
+
+
+  // $('.deletelink').click(delete_text);
+  // $('.editlink').click(edit_text);
 }
 
 
 $(document).ready(main);
 
 var restore  = function(){
+  $('.posts').empty();
     chrome.storage.sync.get({savedCommands:[]},function(result){
      if (typeof result !== 'undefined') {
        var allResults = result.savedCommands;
@@ -54,8 +59,18 @@ var save = function(item){
     var currComment = item.comment;
     var savedCommands = result.savedCommands;
     var commandToSave={command:currCommand,comment:currComment};
+    var index = getIndex(savedCommands,"command",currCommand);
+    console.log(index);
+    if(index==-1){
+      //if command doesn't exist, add it to the list
     savedCommands.push(commandToSave);
+  }else{
+    //if command already exists, update it's comment
+    savedCommands.splice(index,1,commandToSave);
+
+  }
     chrome.storage.sync.set({savedCommands:savedCommands},function(){
+      restore();
       var status = document.getElementById('status');
         status.textContent = 'Options saved.';
         setTimeout(function() {
@@ -87,6 +102,17 @@ var populateTable = function(item){
 
     table.append(secondRow);
     //add table to list item and then to list
+      table.hover(function(){
+      if($(this).children().length==1){
+      $(this).append(hoverText);}
+      $('.editlink').click(edit_text);
+      $('.deletelink').click(delete_text);
+
+      
+    },function(){
+      hoverText.remove();
+         //$('.span').toggle();
+    });
     listItem.append(table);
     listItem.prependTo('.posts');
 
@@ -95,31 +121,20 @@ var populateTable = function(item){
       //$('.myTable').append(hoverText);
       //$('.span').toggle();
 
-    $('.myTable').hover(function(){
-      if($(this).children().length==1){
-      $(this).append(hoverText);}
-      $('.editlink').click(edit_text);
-      console.log($(this).children().length);
-
-      
-    },function(){
-      hoverText.remove();
-         //$('.span').toggle();
-    });
+    //$('.myTable').hover(function(){
+    
 
 
 
-  $('.editlink').click(edit_text);
-  $('.deletelink').click(delete_text);
 
 
-}
 }
 
 document.addEventListener('DOMContentLoaded', restore);
 
 
 var edit_text = function(){
+  console.log('edit function entered');
   var currTable = $(this).parent().parent()[0];
   var info = currTable.getElementsByTagName('td');
   var currCommand = info[0].innerHTML;
@@ -131,11 +146,32 @@ var edit_text = function(){
 }
 
 var delete_text = function(){
+  //console.log('delete function entered');
 
   var currTable = $(this).parent().parent()[0];
   var info = currTable.getElementsByTagName('td');
   var currCommand = info[0].innerHTML;
   var CurrComment = info[1].innerHTML;
-  // grab it from storage and delete
+  chrome.storage.sync.get({savedCommands:[]},function(result){
+    //saved array of objects
+    var savedCommands = result.savedCommands;
+    var index = getIndex(savedCommands, 'command',currCommand);
+    console.log("index: " + index);
+    savedCommands.splice(index,1);
 
+    chrome.storage.sync.set({savedCommands:savedCommands},restore);
+
+  });
+}
+
+
+
+
+var getIndex = function(array, attr, value) {
+    for(var i = 0; i < array.length; i++) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
 }
