@@ -14,6 +14,10 @@ body {
   margin-bottom: 20px;
 }
 
+.bold{
+  font-weight: bold;
+}
+
 
 .posts {
   clear: both;
@@ -21,6 +25,14 @@ body {
   padding-left: 0;
   /*width: 100%;*/
   width : 546px;
+}
+
+.hiddspan{
+  visibility: hidden;
+}
+
+.currspan{
+  visibility: visible;
 }
 
 .posts li {
