@@ -1,9 +1,11 @@
 
   var allCommandsComments;
+  var minBrowserBodyHeight;
 
   
 
   $(function() {
+    minBrowserBodyHeight = $('.browserBody').height();
     chrome.storage.sync.get({savedCommands:[],searchFrom:'command'},function(results){
       allCommandsComments = results.savedCommands;
       var searchCriteria = results.searchFrom;
@@ -34,6 +36,21 @@
     };
       $( "#tags" ).autocomplete( "option", "source", arrayFunction )
     }); 
+
+
+      $( "#tags"  ).on( "autocompleteresponse", function( event, ui ) {
+        //change size of body to contain the list
+        var length = ui.content.length;
+        console.log('length: ' + length);
+        var height = 32//$('.dropdownListItem').height();
+        console.log('list height: '+ height);
+        var heightToAdd = height*length;
+        console.log('height to add: ' + heightToAdd);
+        var newHeight = minBrowserBodyHeight+heightToAdd;
+        $('.browserBody').height(newHeight);
+        console.log('browser height: ' + minBrowserBodyHeight);
+
+      } );
     
     $( "#tags" ).autocomplete({
       create: function () {
@@ -55,7 +72,7 @@
               // }
 
 
-                return $('<li>')//.append(table).appendTo(ul); //return modified <li> component
+                return $('<li>').addClass('dropdownListItem')//.append(table).appendTo(ul); //return modified <li> component
                      .append('<a><b>' + command + '</b><br>' + comment + '</a>')
                      .appendTo(ul);
             };
@@ -68,6 +85,10 @@
       document.getElementById("tags").select();
 
       document.execCommand('Copy',false, null);
+
+      $('.browserBody').height(minBrowserBodyHeight);
+
+
 
       var status = document.getElementById('status');
         status.textContent = 'Command copied to clipboard';

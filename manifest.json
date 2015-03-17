@@ -7,10 +7,6 @@
   "icons": { "16": "search.png",
            "48": "search.png",
           "128": "search.png" },
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
   "permissions": [
           "storage",
           "clipboardWrite",
