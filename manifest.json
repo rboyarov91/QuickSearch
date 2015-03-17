@@ -1,9 +1,12 @@
 {
   "name": "QuickCommandSearch",
-  "description": "Press Ctrl+Shift+F (Command+Shift+F on a Mac) to open the search box",
+  "description": "Find your saved commands quick for easy reuse.  Press Ctrl+Shift+F (Command+Shift+F on a Mac) to open the search box",
   "version": "1.0",
   "manifest_version": 2,
   "options_page": "options.html",
+  "icons": { "16": "search.png",
+           "48": "search.png",
+          "128": "search.png" },
   "background": {
     "scripts": ["background.js"],
     "persistent": false
