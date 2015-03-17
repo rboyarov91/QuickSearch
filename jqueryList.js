@@ -2,9 +2,28 @@
   
 
   $(function() {
-    chrome.storage.sync.get({savedCommands:[]},function(results){
-      var arrayToUse = getArray(results.savedCommands,"command");
+    chrome.storage.sync.get({savedCommands:[],searchFrom:[]},function(results){
+      var searchCriteria = results.searchFrom;
+      var arrayToUse;
+      console.log('criteria: ' + searchCriteria)
+      switch(searchCriteria){
+        //change array to use by the search criteia
+        case('command'):
+        arrayToUse = getArray(results.savedCommands,"command");
+        break;
+        case('comment'):
+        arrayToUse = getArray(results.savedCommands,"comment");
+        break;
+        case('both'):
+        arrayToUse = getArray(results.savedCommands,"command");
+        arrayToUse = arrayToUse.concat(getArray(results.savedCommands,"comment"));
+        break;
+        default:
+        console.log('none of the search criteia were chosen');
+        break;
+      }
       var newArray=arrayToUse;
+      console.log('using following array: ' + newArray);
       var arrayFunction = function(request, response) {
         var results = $.ui.autocomplete.filter(newArray, request.term);
 
