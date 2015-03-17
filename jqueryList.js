@@ -51,6 +51,13 @@
         console.log('browser height: ' + minBrowserBodyHeight);
 
       } );
+
+      $( "#tags" ).keyup(function(){
+        if(!$(this).val()){
+          console.log('change to browser height');
+          $('.browserBody').height(minBrowserBodyHeight);
+        }
+      });
     
     $( "#tags" ).autocomplete({
       select: function(event, ui) {
