@@ -1,8 +1,11 @@
 
+  var allCommandsComments;
+
   
 
   $(function() {
     chrome.storage.sync.get({savedCommands:[],searchFrom:[]},function(results){
+      allCommandsComments = results.savedCommands;
       var searchCriteria = results.searchFrom;
       var arrayToUse;
       console.log('criteria: ' + searchCriteria)
@@ -33,7 +36,32 @@
     }); 
     
     $( "#tags" ).autocomplete({
-    });
+      create: function () {
+            $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+              //find corresponding command to comment 
+              var command;
+              var comment;
+              var index;
+              //if item is a command
+              if(getIndex(allCommandsComments,'command',item.label)!=-1){
+                index = getIndex(allCommandsComments,'command',item.label);
+                command = getArray(allCommandsComments,"command")[index];
+                comment = getArray(allCommandsComments,"comment")[index];
+               }
+              // //if item is comment
+              // else if(getIndex(allCommandsComments,'comment',item.label)!=-1){
+              //   index = getIndex(allCommandsComments,'comment',item.label);
+
+              // }
+
+
+                return $('<li>')//.append(table).appendTo(ul); //return modified <li> component
+                     .append('<a><b>' + command + '</b><br>' + comment + '</a>')
+                     .appendTo(ul);
+            };
+    }});
+
+    //$( "#tags" ).ui-autocomplete {overflow-y: scroll; overflow-x: hidden;}
 
 
     $( "#tags" ).on( "autocompleteselect", function(){
@@ -57,4 +85,18 @@
         returnArray.push(array[i][attr]);
     }
     return returnArray;
+}
+
+var getIndex = function(array, attr, value) {
+  var ind = [];
+    for(var i = 0; i < array.length; i++) {
+        if(array[i][attr] === value) {
+        ind.push(i);
+        }
+    }
+    if(ind.length>0){
+      return ind;
+    }else{
+    return -1;
+  }
 }
