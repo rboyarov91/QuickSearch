@@ -14,14 +14,14 @@
       switch(searchCriteria){
         //change array to use by the search criteia
         case('command'):
-        arrayToUse = getArray(results.savedCommands,"command");
+        arrayToUse = getObjectArray(results.savedCommands,"command");
         break;
         case('comment'):
-        arrayToUse = getArray(results.savedCommands,"comment");
+        arrayToUse = getObjectArray(results.savedCommands,"comment");
         break;
         case('both'):
-        arrayToUse = getArray(results.savedCommands,"command");
-        arrayToUse = arrayToUse.concat(getArray(results.savedCommands,"comment"));
+        arrayToUse = getObjectArray(results.savedCommands,"command");
+        arrayToUse = arrayToUse.concat(getObjectArray(results.savedCommands,"comment"));
         break;
         default:
         console.log('none of the search criteia were chosen');
@@ -42,7 +42,7 @@
         //change size of body to contain the list
         var length = ui.content.length;
         console.log('length: ' + length);
-        var height = 32//$('.dropdownListItem').height();
+        var height = 36//$('.dropdownListItem').height();
         console.log('list height: '+ height);
         var heightToAdd = height*length;
         console.log('height to add: ' + heightToAdd);
@@ -53,6 +53,30 @@
       } );
     
     $( "#tags" ).autocomplete({
+      select: function(event, ui) {
+        event.preventDefault();
+        //if item is a command
+              if(getIndex(allCommandsComments,'command',ui.item.label)!=-1){
+                $( "#tags" ).val(ui.item.label);
+               }
+               //if item is comment
+              else if(getIndex(allCommandsComments,'comment',ui.item.label)!=-1){
+                $( "#tags" ).val(ui.item.value);
+
+              }
+    },
+    focus: function(event, ui) {
+        event.preventDefault();
+        //if item is a command
+              if(getIndex(allCommandsComments,'command',ui.item.label)!=-1){
+                $( "#tags" ).val(ui.item.label);
+               }
+               //if item is comment
+              else if(getIndex(allCommandsComments,'comment',ui.item.label)!=-1){
+                $( "#tags" ).val(ui.item.value);
+
+              }
+    },
       create: function () {
             $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
               //find corresponding command to comment 
@@ -61,24 +85,22 @@
               var index;
               //if item is a command
               if(getIndex(allCommandsComments,'command',item.label)!=-1){
-                index = getIndex(allCommandsComments,'command',item.label);
-                command = getArray(allCommandsComments,"command")[index];
-                comment = getArray(allCommandsComments,"comment")[index];
+                command = item.label;
+                comment = item.value;
                }
-              // //if item is comment
-              // else if(getIndex(allCommandsComments,'comment',item.label)!=-1){
-              //   index = getIndex(allCommandsComments,'comment',item.label);
+               //if item is comment
+              else if(getIndex(allCommandsComments,'comment',item.label)!=-1){
+                command = item.value;
+                comment=item.label;
 
-              // }
+              }
 
 
-                return $('<li>').addClass('dropdownListItem')//.append(table).appendTo(ul); //return modified <li> component
+                return $('<li>').addClass('dropdownListItem')
                      .append('<a><b>' + command + '</b><br>' + comment + '</a>')
                      .appendTo(ul);
             };
     }});
-
-    //$( "#tags" ).ui-autocomplete {overflow-y: scroll; overflow-x: hidden;}
 
 
     $( "#tags" ).on( "autocompleteselect", function(){
@@ -106,7 +128,20 @@
         returnArray.push(array[i][attr]);
     }
     return returnArray;
-}
+    }
+
+    var getObjectArray = function(array, attr) {
+      var returnArray = [];
+    for(var i = 0; i < array.length; i++) {
+      if(attr=='command'){
+        returnArray.push({label:array[i][attr],value:array[i]['comment']});
+      }
+        else{
+        returnArray.push({label:array[i][attr],value:array[i]['command']});
+        }
+    }
+    return returnArray;
+    }
 
 var getIndex = function(array, attr, value) {
   var ind = [];
