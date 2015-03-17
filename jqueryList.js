@@ -4,7 +4,7 @@
   
 
   $(function() {
-    chrome.storage.sync.get({savedCommands:[],searchFrom:[]},function(results){
+    chrome.storage.sync.get({savedCommands:[],searchFrom:'command'},function(results){
       allCommandsComments = results.savedCommands;
       var searchCriteria = results.searchFrom;
       var arrayToUse;
