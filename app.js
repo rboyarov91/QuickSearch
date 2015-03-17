@@ -53,6 +53,13 @@ var restore  = function(){
 
   }
 
+  var restore_dropdown = function(){
+    chrome.storage.sync.get({searchFrom:'command'},function(result){
+      $('.dropdown-select').val(result.searchFrom);
+    });
+
+  };
+
 var save = function(item){
   //add to the array of stored items in chrome
   chrome.storage.sync.get({savedCommands:[]},function(result){
@@ -132,6 +139,7 @@ var populateTable = function(item){
 }
 
 document.addEventListener('DOMContentLoaded', restore);
+document.addEventListener('DOMContentLoaded', restore_dropdown);
 
 
 var edit_text = function(){

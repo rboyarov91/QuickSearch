@@ -23,7 +23,7 @@
       document.execCommand('Copy',false, null);
 
       var status = document.getElementById('status');
-        status.textContent = 'Copied to clipboard';
+        status.textContent = 'Command copied to clipboard';
         setTimeout(function() {
         status.textContent = '';
         window.close();
